@@ -13,11 +13,11 @@ class ApplicationContext : Application() {
     companion object {
         lateinit var instance: ApplicationContext
             private set
-        lateinit var database:WeatherDatabase
+        lateinit var database: WeatherDatabase
             private set
-        lateinit var apiService : WeatherApiService
+        lateinit var apiService: WeatherApiService
             private set
-        lateinit var sharedPrefs : PreferencesManager
+        lateinit var sharedPrefs: PreferencesManager
             private set
         lateinit var repository: WeatherRepository
             private set
@@ -26,13 +26,13 @@ class ApplicationContext : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        //database = WeatherDatabase.getInstance(instance)
+        database = WeatherDatabase.getInstance(instance)
         apiService = Retrofit.Builder()
-                .baseUrl("https://api.open-meteo.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(WeatherApiService::class.java)
+            .baseUrl("https://api.open-meteo.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(WeatherApiService::class.java)
         sharedPrefs = PreferencesManager(instance)
-        repository = WeatherRepository(/*database.weatherDao(),*/ apiService, sharedPrefs)
+        repository = WeatherRepository(database.weatherDao(), apiService, sharedPrefs)
     }
 }
