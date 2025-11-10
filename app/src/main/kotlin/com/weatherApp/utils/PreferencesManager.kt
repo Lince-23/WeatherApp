@@ -8,7 +8,6 @@ class PreferencesManager(context: Context) {
     val sharedPreferences =
         context.getSharedPreferences("sharedPreferencesFile", Context.MODE_PRIVATE)
 
-    //TODO save data in SharedPreferences
     fun saveLocation(city: String, latitude: Double, longitude: Double) {
         with(sharedPreferences.edit()) {
             putString("city", city)

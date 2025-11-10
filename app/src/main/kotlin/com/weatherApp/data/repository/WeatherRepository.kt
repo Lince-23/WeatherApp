@@ -19,11 +19,11 @@ class WeatherRepository(
         val name = prefs.getCityName()
         val latitude = prefs.getLatitude()
         val longitude = prefs.getLongitude()
-        return Triple(name,latitude,longitude)
+        return Triple(name, latitude, longitude)
     }
 
-    fun saveLocation(name: String,latitude: Double,longitude: Double, ) {
-        prefs.saveLocation(name,latitude,longitude)
+    fun saveLocation(name: String, latitude: Double, longitude: Double) {
+        prefs.saveLocation(name, latitude, longitude)
     }
 
     suspend fun fetchWeather(latitude: Float?, longitude: Float?) {
@@ -40,23 +40,7 @@ class WeatherRepository(
     }
 
     fun getWeather(): LiveData<List<WeatherEntity>> {
-        // TODO uncomment when DAO is defined and delete all the other lines on this function
-        //  return dao.retrieveWeatherData()
-        val mockData = MutableLiveData<List<WeatherEntity>>()
-
-        val now = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")
-
-        val list = List(12) { i ->
-            WeatherEntity(
-                id = i,
-                temperature = (10..25).random().toDouble(),
-                time = now.plusHours(i.toLong()).format(formatter)
-            )
-        }
-
-        mockData.value = list
-        return mockData
+        return dao.retrieveWeatherData()
     }
 }
 
